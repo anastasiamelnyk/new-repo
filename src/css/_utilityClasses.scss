@@ -1,0 +1,21 @@
+@import '_variables';
+
+.edge-padding {
+    padding-left: 20px;
+    padding-right: 20px;
+
+    @media (min-width: $media-xs) {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    @media (min-width: $media-md) {
+        padding-left: 10%;
+        padding-right: 10%;
+    }
+
+    @media (min-width: $media-lg) {
+        padding-left: 15%;
+        padding-right: 15%;
+    }
+}
