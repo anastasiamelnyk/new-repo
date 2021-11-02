@@ -21,6 +21,28 @@ const getCityNameFromCoords = async (coords) => {
     }
 }
 
+const getGeoErrorText = (code) => {
+    /*
+        ERROR CODES:
+        1: PERMISSION_DENIED: The acquisition of the geolocation information failed because the page didn't have the permission to do it.
+        2: POSITION_UNAVAILABLE: The acquisition of the geolocation failed because one or several internal sources of position returned an internal error.
+        3: TIMEOUT: Geolocation information was not obtained in the allowed time.
+    * */
+    switch (code) {
+        case 1:
+            return 'Please allow location for this site in your browser'
+
+        case 2:
+            return 'Your location can not be found due to internal error'
+
+        case 3:
+            return 'Your location can not be found in allowed time'
+
+        default:
+            return 'Something went wrong'
+    }
+}
+
 const saveLocation = (location) => {
     localStorage.setItem('location', JSON.stringify({
         location,
@@ -30,6 +52,7 @@ const saveLocation = (location) => {
 
 export const useLocation = () => {
     const [geo, setGeo] = useState(null);
+    const [geoError, setGeoError] = useState(null);
 
     async function manageLocation () {
         const validSavedLocation = await getValidSavedLocation();
@@ -44,12 +67,7 @@ export const useLocation = () => {
                 setGeo(cityName);
             }, (err) => {
                 console.log(err);
-                /*
-                ERROR CODES:
-                1: PERMISSION_DENIED: The acquisition of the geolocation information failed because the page didn't have the permission to do it.
-                2: POSITION_UNAVAILABLE: The acquisition of the geolocation failed because one or several internal sources of position returned an internal error.
-                3: TIMEOUT: Geolocation information was not obtained in the allowed time.
-                * */
+                setGeoError(getGeoErrorText(err.code));
             }, {enableHighAccuracy: true});
         } else {
             console.log('No geolocation in browser');
@@ -60,7 +78,7 @@ export const useLocation = () => {
         manageLocation();
     }, []);
 
-    return geo;
+    return [geo, geoError, setGeoError];
 }
 
 
