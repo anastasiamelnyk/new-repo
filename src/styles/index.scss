@@ -1,3 +1,23 @@
+@import '_utilityClasses';
+@import '_variables';
+
+html {
+  /* color variables */
+  --text-color: #050003;
+  --background-color: #b8e7ff;
+  --cta-color: #5c1f3f;
+
+  font-size: 18px;
+  color: var(--text-color);
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
