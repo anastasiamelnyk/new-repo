@@ -1,0 +1,16 @@
+.location-bar {
+    width: 100%;
+    background-color: var(--background-color);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: center;
+
+    .city-name {
+        font-weight: bold;
+    }
+
+    .pin {
+        margin-right: 12px;
+    }
+}
