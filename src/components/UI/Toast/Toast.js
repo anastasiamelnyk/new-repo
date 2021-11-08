@@ -2,6 +2,7 @@ import {createPortal} from "react-dom";
 import classes from "./Toast.module.scss";
 import classNames from "classnames/bind";
 import {useEffect, useRef} from "react";
+import PropTypes from 'prop-types';
 
 const Toast = ({ isShown, isError, closeToast, text }) => {
     const disappearTimer = useRef(null);
@@ -32,3 +33,10 @@ const Toast = ({ isShown, isError, closeToast, text }) => {
 };
 
 export default Toast;
+
+Toast.propTypes = {
+    isShown: PropTypes.bool,
+    isError: PropTypes.bool,
+    closeToast: PropTypes.func,
+    text: PropTypes.string
+}
