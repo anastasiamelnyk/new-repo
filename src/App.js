@@ -1,4 +1,4 @@
-import Header from "./components/header/Header";
+import Header from "./components/Header/Header";
 import Toast from "./components/UI/Toast/Toast";
 import {useLocation} from "./hooks/useLocation";
 import {LocationContext} from "./context/locationContext";
