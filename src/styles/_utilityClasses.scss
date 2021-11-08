@@ -19,3 +19,18 @@
         padding-right: 15%;
     }
 }
+
+.page-container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    @media (min-width: $media-sm) {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+
+    @media (min-width: $media-md) {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+}
