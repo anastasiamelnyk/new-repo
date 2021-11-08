@@ -8,4 +8,12 @@ export class WeatherApi {
             params: { lat, lon, limit: 1, appid: API_KEY }
         }).then(result => result.data);
     }
+
+    static getCityWeather(lat, lon) {
+        return axios.get(`${BASE_URL}/data/2.5/onecall`, {
+            params: {
+                lat, lon, exclude: 'minutely,alerts', units: 'metric', appid: API_KEY
+            }
+        }).then(result => result.data);
+    }
 }
