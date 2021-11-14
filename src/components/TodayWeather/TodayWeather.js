@@ -67,7 +67,7 @@ const TodayWeather = ({ weather }) => {
             <div className={classes['hourly']}>
                 <AliceCarousel
                     items={renderHourly()}
-                    responsive={responsive.current}
+                    responsive={responsive}
                     disableDotsControls={true}
                     renderPrevButton={renderPrevButton}
                     renderNextButton={renderNextButton}
