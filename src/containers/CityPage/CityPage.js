@@ -28,7 +28,7 @@ const CityPage = () => {
     return (
         <div className={cityPageClasses}>
             <TodayWeather weather={todayWeather} />
-            <SeveralDaysForecast />
+            <SeveralDaysForecast forecast={forecast} />
         </div>
     );
 };

@@ -8,5 +8,9 @@ export const getIconPath = icon => `${ICON_PATH}/${icon}@2x.png`;
 
 export const getFullDate = date => format(new Date(date), 'EEEE, MMMM do');
 
+export const getWeekdayDate = date => format(new Date(date), 'EEEE');
+
+export const getMonthDayDate = date => format(new Date(date), 'MMMM do');
+
 export const getHourMinuteDate = date => format(new Date(date), 'HH:mm');
 

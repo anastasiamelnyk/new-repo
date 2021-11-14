@@ -1,6 +1,5 @@
 @import "../../styles/_variables";
 
-
 .city-page {
   display: flex;
   flex-flow: column;
@@ -8,5 +7,6 @@
   @media (min-width: $media-md) {
     flex-flow: row;
     justify-content: space-between;
+    align-items: flex-start;
   }
 }
