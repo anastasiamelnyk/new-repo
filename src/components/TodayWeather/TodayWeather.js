@@ -2,11 +2,10 @@ import PropTypes from 'prop-types';
 import LoadingIndicator from "../UI/LoadingIndicator/LoadingIndicator";
 import format from 'date-fns/format'
 import classes from './todayWeather.module.scss';
-import {useMemo} from "react";
+import {useMemo, useRef} from "react";
 import {capitalizeFirstLetter} from "../../utils/js";
-// import Slider from "react-slick";
-// import "~slick-carousel/slick/slick.css";
-// import "~slick-carousel/slick/slick-theme.css";
+import AliceCarousel from 'react-alice-carousel';
+import 'react-alice-carousel/lib/alice-carousel.css';
 
 const ICON_PATH = 'http://openweathermap.org/img/wn';
 
@@ -37,6 +36,29 @@ const TodayWeather = ({ weather }) => {
         ));
     }
 
+    const responsive = useRef({
+        0: { items: 3 },
+        420: { items: 4 },
+        520: { items: 5 },
+        620: { items: 6 },
+        720: { items: 7 },
+        820: { items: 8 },
+        920: { items: 9 },
+        979: { items: 5 },
+        1400: { items: 6 },
+    });
+
+
+    const renderPrevButton = ({ isDisabled }) => {
+        return <button style={{ opacity: isDisabled ? '0.5' : 1}} className={classes['carousel-prev-btn']}/>;
+    };
+
+    const renderNextButton = ({ isDisabled }) => {
+        return <button style={{ opacity: isDisabled ? '0.5' : 1 }} className={classes['carousel-next-btn']}/>;
+    };
+
+
+
     if (!weather) return <LoadingIndicator />
 
     return (
@@ -57,7 +79,13 @@ const TodayWeather = ({ weather }) => {
                 </div>
             </div>
             <div className={classes['hourly']}>
-                {renderHourly()}
+                <AliceCarousel
+                    items={renderHourly()}
+                    responsive={responsive.current}
+                    disableDotsControls={true}
+                    renderPrevButton={renderPrevButton}
+                    renderNextButton={renderNextButton}
+                />
             </div>
         </section>
     );

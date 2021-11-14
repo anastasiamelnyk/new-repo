@@ -1,6 +1,6 @@
 import TodayWeather from "../../components/TodayWeather/TodayWeather";
 import SeveralDaysForecast from "../../components/SeveralDaysForecast/SeveralDaysForecast";
-import classes from './CityPage.module.scss';
+import classes from './cityPage.module.scss';
 import classNames from "classnames/bind";
 import {useRef, useContext, useEffect, useState} from "react";
 import {WeatherApi} from "../../api/weatherApi";
