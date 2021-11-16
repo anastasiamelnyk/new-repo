@@ -1,24 +1,18 @@
 import PropTypes from 'prop-types';
 import LoadingIndicator from "../UI/LoadingIndicator/LoadingIndicator";
 import classes from './todayWeather.module.scss';
-import {useMemo} from "react";
-import {capitalizeFirstLetter} from "../../utils/js";
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
-import { getFullDate, getHourMinuteDate, getIconPath } from "../../utils/js";
+import { getFullDate, getHourMinuteDate, getIconPath, getWeatherDescription } from "../../utils/js";
 
 const TodayWeather = ({ weather }) => {
-    const weatherDescription = useMemo(() => weather
-        ? capitalizeFirstLetter(weather.current.weather[0].description)
-        : '', [weather]);
-
     const renderHourly = () => {
         const dayHourly = weather.hourly.splice(0, 24);
 
         return dayHourly.map(hour => (
             <div className={classes['hourly-item']} key={hour.dt}>
                 <h4 className={classes['hour']}>{getHourMinuteDate(hour.dt)}</h4>
-                <img src={getIconPath(hour.weather[0].icon)} alt={hour.weather[0].description} width='40' height='40' />
+                <img src={getIconPath(hour)} alt={getWeatherDescription(hour)} width='40' height='40' />
                 <div>{Math.round(hour.temp)}&#176;C</div>
             </div>
         ));
@@ -53,10 +47,10 @@ const TodayWeather = ({ weather }) => {
                 {getFullDate(weather.current.dt)}
             </h2>
             <div className={classes['general']}>
-                <img src={getIconPath(weather.current.weather[0].icon)} alt={weatherDescription} width='70' height='70' />
+                <img src={getIconPath(weather.current)} alt={getWeatherDescription(weather.current)} width='70' height='70' />
                 <span className={classes['main-temp']}>{Math.round(weather.current.temp)}&#176;C</span>
                 <div className={classes['secondary']}>
-                    <span>{weatherDescription}</span>
+                    <span>{getWeatherDescription(weather.current)}</span>
                     <span>Feels like {Math.round(weather.current.feels_like)}&#176;C</span>
                 </div>
                 <div className={classes['secondary']}>

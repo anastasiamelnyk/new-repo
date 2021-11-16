@@ -15,14 +15,14 @@ const SeveralDaysForecast = ({ forecast }) => {
                 <div>{getWeekdayDate(day.dt)}</div>
                 <div>{getMonthDayDate(day.dt)}</div>
             </div>
-            <img src={getIconPath(day.weather[0].icon)} alt={day.weather[0].description} width={60} height={60} />
+            <img src={getIconPath(day)} alt={day.weather[0].description} width={60} height={60} />
             <div>
                 <span>{Math.round(day.temp.max)}&#176;C</span>
                 &nbsp;/&nbsp;
                 <span>{Math.round(day.temp.min)}&#176;C</span>
             </div>
             <Modal isShown={modalShown === day.dt} closeModal={() => setModalShown(null)}>
-                <ForecastItem />
+                <ForecastItem forecast={day} />
             </Modal>
         </li>
     ));
