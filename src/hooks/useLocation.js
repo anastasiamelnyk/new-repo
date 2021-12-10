@@ -1,7 +1,9 @@
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import add from 'date-fns/add';
 import isAfter from 'date-fns/isAfter';
 import {WeatherApi} from "../api/weatherApi";
+import {useDispatch} from "react-redux";
+import {setLocationAction, setLocationErrorAction} from "../store/locationReducer";
 
 const getValidSavedLocation = async () => {
     const storageLocation = localStorage.getItem('location');
@@ -51,23 +53,22 @@ const saveLocation = (location) => {
 }
 
 export const useLocation = () => {
-    const [geo, setGeo] = useState(null);
-    const [geoError, setGeoError] = useState(null);
+    const dispatch = useDispatch();
 
     async function manageLocation () {
         const validSavedLocation = await getValidSavedLocation();
         if (validSavedLocation) {
-            setGeo(validSavedLocation);
+            dispatch(setLocationAction(validSavedLocation));
             return;
         }
 
         if ('geolocation' in navigator) {
             navigator.geolocation.getCurrentPosition(async (resp) => {
                 const cityName = await getCityNameFromCoords(resp.coords);
-                setGeo(cityName);
+                dispatch(setLocationAction(cityName));
             }, (err) => {
                 console.log(err);
-                setGeoError(getGeoErrorText(err.code));
+                dispatch(setLocationErrorAction(getGeoErrorText(err.code)));
             }, {enableHighAccuracy: true});
         } else {
             console.log('No geolocation in browser');
@@ -77,8 +78,6 @@ export const useLocation = () => {
     useEffect(() => {
         manageLocation();
     }, []);
-
-    return [geo, geoError, setGeoError];
 }
 
 
