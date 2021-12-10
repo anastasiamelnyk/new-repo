@@ -1,0 +1,33 @@
+.menu-item {
+  display: inline-block;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: var(--text-color);
+  font-size: 0.95rem;
+  padding: 16px 0;
+  margin-right: 24px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 12px;
+    width: 0%;
+    height: 1px;
+    background-color: var(--text-color);
+    transition: width 0.3s;
+  }
+
+  &:hover::after {
+    width: 80%;
+  }
+}
+
+.selected::after {
+  width: 80%;
+}

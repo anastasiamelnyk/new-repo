@@ -1,13 +1,10 @@
 import LocationBar from "../LocationBar/LocationBar";
+import MainMenu from "../MainMenu/MainMenu";
 
 const Header = () => {
     return (
         <div>
-            {/*<nav>*/}
-            {/*    <span>Today's Weather</span>*/}
-            {/*    <span>Weather Stats</span>*/}
-            {/*    Someday here will be a menu*/}
-            {/*</nav>*/}
+            <MainMenu />
             <LocationBar />
         </div>
     );
