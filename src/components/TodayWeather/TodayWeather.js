@@ -1,11 +1,13 @@
-import PropTypes from 'prop-types';
 import LoadingIndicator from "../UI/LoadingIndicator/LoadingIndicator";
 import classes from './todayWeather.module.scss';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import { getFullDate, getHourMinuteDate, getIconPath, getWeatherDescription } from "../../utils/js";
+import {useSelector} from "react-redux";
 
-const TodayWeather = ({ weather }) => {
+const TodayWeather = () => {
+    const weather = useSelector(store => store.cityReducer.todayWeather);
+
     const renderHourly = () => {
         const dayHourly = weather.hourly.splice(0, 24);
 
@@ -72,10 +74,3 @@ const TodayWeather = ({ weather }) => {
 };
 
 export default TodayWeather;
-
-TodayWeather.propTypes = {
-    weather: PropTypes.exact({
-        current: PropTypes.object,
-        hourly: PropTypes.arrayOf(PropTypes.object)
-    })
-}

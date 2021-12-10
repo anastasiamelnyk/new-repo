@@ -1,12 +1,14 @@
-import PropTypes from 'prop-types';
 import classes from './severalDaysForecast.module.scss';
 import LoadingIndicator from "../UI/LoadingIndicator/LoadingIndicator";
 import Modal from "../UI/Modal/Modal";
 import ForecastItem from "../ForecastItem/ForecastItem";
 import { getWeekdayDate, getMonthDayDate, getIconPath } from "../../utils/js";
 import {useState} from "react";
+import {useSelector} from "react-redux";
 
-const SeveralDaysForecast = ({ forecast }) => {
+const SeveralDaysForecast = () => {
+    const forecast = useSelector(store => store.cityReducer.forecast);
+
     const [modalShown, setModalShown] = useState(null);
 
     const renderForecast = () => forecast.map(day => (
@@ -39,7 +41,3 @@ const SeveralDaysForecast = ({ forecast }) => {
 };
 
 export default SeveralDaysForecast;
-
-SeveralDaysForecast.propTypes = {
-    forecast: PropTypes.arrayOf(PropTypes.object)
-}

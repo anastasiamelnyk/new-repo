@@ -2,33 +2,27 @@ import TodayWeather from "../../components/TodayWeather/TodayWeather";
 import SeveralDaysForecast from "../../components/SeveralDaysForecast/SeveralDaysForecast";
 import classes from './cityPage.module.scss';
 import classNames from "classnames/bind";
-import {useRef, useContext, useEffect, useState} from "react";
-import {WeatherApi} from "../../api/weatherApi";
+import {useRef, useContext, useEffect} from "react";
 import {LocationContext} from "../../context/locationContext";
+import {fetchCityWeather} from "../../store/cityReducer";
+import {useDispatch} from "react-redux";
 
 const CityPage = () => {
     const cx = useRef(classNames.bind(classes));
     const cityPageClasses = cx.current('edge-padding', 'page-container', 'city-page');
     const location = useContext(LocationContext);
-    const [todayWeather, setTodayWeather] = useState(null);
-    const [forecast, setForecast] = useState(null);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        async function getWeather() {
-            if (!location.city) return;
+        if (!location.city) return;
 
-            const { current, hourly, daily } = await WeatherApi.getCityWeather(location.city.lat, location.city.lon);
-            setTodayWeather({current, hourly});
-            setForecast(daily);
-        }
-
-        getWeather();
+        dispatch(fetchCityWeather(location.city.lat, location.city.lon));
     }, [location]);
 
     return (
         <div className={cityPageClasses}>
-            <TodayWeather weather={todayWeather} />
-            <SeveralDaysForecast forecast={forecast} />
+            <TodayWeather />
+            <SeveralDaysForecast />
         </div>
     );
 };
