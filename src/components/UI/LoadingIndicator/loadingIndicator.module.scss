@@ -1,0 +1,46 @@
+@import "../../../styles/_variables";
+
+.loading-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.loading-indicator {
+  width: 60%;
+  height: 8px;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 15%;
+    height: 100%;
+    border-radius: 4px;
+    background-color: var(--background-color);
+    animation: load 1.5s ease-in-out infinite alternate;
+  }
+
+  @media (min-width: $media-md) {
+    width: 80%;
+  }
+}
+
+@keyframes load {
+  from {
+    width: 15%;
+    left: 0;
+  }
+
+  50% {
+    width: 30%;
+  }
+
+  to {
+    width: 15%;
+    left: 85%;
+  }
+}

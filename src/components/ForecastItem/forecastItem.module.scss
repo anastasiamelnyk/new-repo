@@ -1,0 +1,31 @@
+.forecast-date {
+  margin: 0 0 8px 0;
+}
+
+.forecast-weather {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.forecast-timing {
+  display: flex;
+}
+
+.timing-item {
+  &:first-child {
+    margin-right: 80px;
+
+    .timing-row {
+      width: 115px;
+    }
+  }
+}
+
+.timing-row {
+  width: 135px;
+  display: flex;
+  justify-content: space-between;
+}
