@@ -1,0 +1,52 @@
+.button-reset {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.button {
+  border-radius: 3px;
+  background-color: var(--cta-color);
+  color: white;
+  cursor: pointer;
+  border: 3px solid var(--cta-color);
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+.button-add {
+  @extend .button-reset;
+  @extend .button;
+  width: 32px;
+  height: 32px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 3px;
+    background-color: white;
+    border-radius: 2px;
+    transition: background-color 0.3s;
+  }
+
+  &::after {
+    transform: rotate(90deg);
+  }
+
+  &:hover {
+    &::before,
+    &::after {
+      background-color: var(--cta-color);
+    }
+  }
+}
