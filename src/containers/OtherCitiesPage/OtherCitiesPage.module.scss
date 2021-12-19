@@ -16,6 +16,7 @@
   @media (min-width: $media-sm) {
     border-bottom: none;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
+    height: calc(100vh - 54px - 64px); //screen height - main menu height - location bar height
   }
 }
 
