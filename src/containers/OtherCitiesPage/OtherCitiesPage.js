@@ -16,6 +16,11 @@ const OtherCitiesPage = () => {
     const searchResults = useSelector(store => store.otherCitiesReducer.searchedCityResults);
     const otherCitiesList = useSelector(store => store.otherCitiesReducer.otherCitiesList);
     const [searchReq, setSearchReq] = useState('');
+    const [showedCity, setShowedCity] = useState(null);
+
+    useEffect(() => {
+        if (otherCitiesList.length === 1) setShowedCity(otherCitiesList[0]);
+    }, [otherCitiesList]);
 
     const search = (e) => {
         e.preventDefault();
@@ -64,6 +69,8 @@ const OtherCitiesPage = () => {
                     <Tabs
                         options={otherCitiesList}
                         keysToDisplay={['name', 'country', 'state']}
+                        value={showedCity}
+                        setValue={setShowedCity}
                     />
                 </div>
             </div>

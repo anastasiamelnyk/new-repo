@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import classes from './Tabs.module.scss';
 import classNames from "classnames/bind";
-import {useRef, useState, useEffect} from "react";
+import {useRef} from "react";
 
-const Tabs = ({ options, keysToDisplay, variant, value }) => {
+const Tabs = ({ options, keysToDisplay, variant, value, setValue }) => {
     const cx = useRef(classNames.bind(classes));
     const tabsClasses = cx.current({
         'tabs': true,
@@ -13,15 +13,11 @@ const Tabs = ({ options, keysToDisplay, variant, value }) => {
         'tab-button': true,
         'tab-button-selected': getTabSelected(tabItem)
     });
-    const [currentSelectedTab, setCurrentSelectedTab] = useState(null);
-    useEffect(() => {
-        if (options.length === 1) setCurrentSelectedTab(options[0]);
-    }, [options]);
     const getTabSelected = (tabItem) => {
-        if (!currentSelectedTab) return;
+        if (!value) return;
         return typeof tabItem === 'object'
-            ? keysToDisplay.every(key => tabItem[key] === currentSelectedTab[key])
-            : tabItem === currentSelectedTab;
+            ? keysToDisplay.every(key => tabItem[key] === value[key])
+            : tabItem === value;
     };
 
     const renderOptions = () => {
@@ -32,7 +28,7 @@ const Tabs = ({ options, keysToDisplay, variant, value }) => {
 
         return options.map(option => (
             <li key={getOptionText(option)} className={classes['tab-item']}>
-                <button className={tabButtonClasses(option)} onClick={() => setCurrentSelectedTab(option)}>
+                <button className={tabButtonClasses(option)} onClick={() => setValue(option)}>
                     {getOptionText(option)}
                 </button>
             </li>
@@ -51,13 +47,15 @@ export default Tabs;
 Tabs.propTypes = {
     options: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])),
     keysToDisplay: PropTypes.arrayOf(PropTypes.string), //needed if options are objects, selects which key info will be displayed
+    variant: PropTypes.oneOf(['horizontal', 'vertical']),
     value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-    variant: PropTypes.oneOf(['horizontal', 'vertical'])
+    setValue: PropTypes.func
 }
 
 Tabs.defaultProps = {
     options: [],
     keysToDisplay: [],
+    variant: 'vertical',
     value: '',
-    variant: 'vertical'
+    setValue: null
 }
