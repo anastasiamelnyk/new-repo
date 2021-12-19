@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {searchCity, addToOtherCitiesActions} from "../../store/otherCitiesReducer";
 import Button from "../../components/UI/Button/Button";
 import Tabs from "../../components/UI/Tabs/Tabs";
+import {useMediaQuery} from 'react-responsive'
 
 const OtherCitiesPage = () => {
     const cx = useRef(classNames.bind(classes));
@@ -17,6 +18,9 @@ const OtherCitiesPage = () => {
     const otherCitiesList = useSelector(store => store.otherCitiesReducer.otherCitiesList);
     const [searchReq, setSearchReq] = useState('');
     const [showedCity, setShowedCity] = useState(null);
+    const areTabsHorizontal = useMediaQuery({
+        query: '(max-width: 767px)'
+    })
 
     useEffect(() => {
         if (otherCitiesList.length === 1) setShowedCity(otherCitiesList[0]);
@@ -69,6 +73,7 @@ const OtherCitiesPage = () => {
                     <Tabs
                         options={otherCitiesList}
                         keysToDisplay={['name', 'country', 'state']}
+                        variant={areTabsHorizontal ? 'horizontal' : 'vertical'}
                         value={showedCity}
                         setValue={setShowedCity}
                     />

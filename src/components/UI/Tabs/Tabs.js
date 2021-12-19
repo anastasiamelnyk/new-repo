@@ -27,7 +27,7 @@ const Tabs = ({ options, keysToDisplay, variant, value, setValue }) => {
             : option;
 
         return options.map(option => (
-            <li key={getOptionText(option)} className={classes['tab-item']}>
+            <li key={getOptionText(option)}>
                 <button className={tabButtonClasses(option)} onClick={() => setValue(option)}>
                     {getOptionText(option)}
                 </button>
@@ -55,7 +55,7 @@ Tabs.propTypes = {
 Tabs.defaultProps = {
     options: [],
     keysToDisplay: [],
-    variant: 'vertical',
+    variant: 'horizontal',
     value: '',
     setValue: null
 }
