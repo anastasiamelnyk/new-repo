@@ -1,11 +1,12 @@
 import classNames from "classnames/bind";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import classes from "./OtherCitiesPage.module.scss";
 import TodayWeather from "../../components/TodayWeather/TodayWeather";
 import SeveralDaysForecast from "../../components/SeveralDaysForecast/SeveralDaysForecast";
 import {useDispatch, useSelector} from "react-redux";
 import {searchCity, addToOtherCitiesActions} from "../../store/otherCitiesReducer";
 import Button from "../../components/UI/Button/Button";
+import Tabs from "../../components/UI/Tabs/Tabs";
 
 const OtherCitiesPage = () => {
     const cx = useRef(classNames.bind(classes));
@@ -18,7 +19,7 @@ const OtherCitiesPage = () => {
 
     const search = (e) => {
         e.preventDefault();
-        dispatch(searchCity(searchReq));
+        if (searchReq) dispatch(searchCity(searchReq));
     }
 
     const renderSearchedResults = () => {
@@ -60,12 +61,10 @@ const OtherCitiesPage = () => {
                 </form>
                 {renderSearchedResults()}
                 <div>
-                    list with tabs here
-                    {!!otherCitiesList.length && otherCitiesList.map(city => (
-                        <div>
-                            {city.name}, {city.country}, {city.state}
-                        </div>
-                    ))}
+                    <Tabs
+                        options={otherCitiesList}
+                        keysToDisplay={['name', 'country', 'state']}
+                    />
                 </div>
             </div>
             <div>
