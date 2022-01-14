@@ -6,6 +6,7 @@
 
   @media (min-width: $media-md) {
     flex-flow: row;
+    gap: 20px;
     justify-content: space-between;
     align-items: flex-start;
   }

@@ -3,11 +3,9 @@ import classes from './todayWeather.module.scss';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import { getFullDate, getHourMinuteDate, getIconPath, getWeatherDescription } from "../../utils/js";
-import {useSelector} from "react-redux";
+import PropTypes from 'prop-types';
 
-const TodayWeather = () => {
-    const weather = useSelector(store => store.cityReducer.todayWeather);
-
+const TodayWeather = ({ weather, isOtherCity }) => {
     const renderHourly = () => {
         const dayHourly = weather.hourly.splice(0, 24);
 
@@ -21,16 +19,29 @@ const TodayWeather = () => {
     }
 
     // carousel
-    const responsive = {
-        0: { items: 3 },
-        420: { items: 4 },
-        520: { items: 5 },
-        620: { items: 6 },
-        720: { items: 7 },
-        820: { items: 8 },
-        920: { items: 9 },
-        979: { items: 5 },
-        1400: { items: 6 },
+    const responsive = isOtherCity
+        ? {
+            0: { items: 2 },
+            420: { items: 3 },
+            520: { items: 5 },
+            620: { items: 6 },
+            720: { items: 7 },
+            768: { items: 4 },
+            920: { items: 5 },
+            1120: { items: 6 },
+            1220: { items: 7 },
+            1400: { items: 8 },
+            1400: { items: 9 }
+        } : {
+            0: { items: 3 },
+            420: { items: 4 },
+            520: { items: 5 },
+            620: { items: 6 },
+            720: { items: 7 },
+            820: { items: 8 },
+            920: { items: 9 },
+            979: { items: 5 },
+            1400: { items: 6 }
     };
 
     const renderPrevButton = ({ isDisabled }) => (
@@ -74,3 +85,16 @@ const TodayWeather = () => {
 };
 
 export default TodayWeather;
+
+TodayWeather.propTypes = {
+    weather: PropTypes.shape({
+        current: PropTypes.object,
+        hourly: PropTypes.array
+    }),
+    isOtherCity: PropTypes.bool
+}
+
+TodayWeather.defaultProps = {
+    weather: null,
+    isOtherCity: false
+}

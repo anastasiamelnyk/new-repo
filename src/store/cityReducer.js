@@ -27,9 +27,13 @@ const setForecastAction = (forecast) => {
     return { type: SET_FORECAST, payload: forecast }
 }
 
+export const getCityWeather = (lat, lon) => {
+    return WeatherApi.getCityWeather(lat, lon);
+}
+
 export const fetchCityWeather = (lat, lon) => {
     return async dispatch => {
-        const { current, hourly, daily } = await WeatherApi.getCityWeather(lat, lon);
+        const { current, hourly, daily } = await getCityWeather(lat, lon);
         dispatch(setTodayWeatherAction({ current, hourly }));
         dispatch(setForecastAction(daily));
     }

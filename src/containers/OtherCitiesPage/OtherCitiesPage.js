@@ -4,10 +4,11 @@ import classes from "./OtherCitiesPage.module.scss";
 import TodayWeather from "../../components/TodayWeather/TodayWeather";
 import SeveralDaysForecast from "../../components/SeveralDaysForecast/SeveralDaysForecast";
 import {useDispatch, useSelector} from "react-redux";
-import {searchCity, addToOtherCitiesActions} from "../../store/otherCitiesReducer";
+import {searchCity, addToOtherCitiesActions, addToWeatherListAction} from "../../store/otherCitiesReducer";
 import Button from "../../components/UI/Button/Button";
 import Tabs from "../../components/UI/Tabs/Tabs";
-import {useMediaQuery} from 'react-responsive'
+import {useMediaQuery} from 'react-responsive';
+import { getCityWeather } from "../../store/cityReducer";
 
 const OtherCitiesPage = () => {
     const cx = useRef(classNames.bind(classes));
@@ -21,10 +22,31 @@ const OtherCitiesPage = () => {
     const areTabsHorizontal = useMediaQuery({
         query: '(max-width: 767px)'
     })
+    const otherCitiesWeatherList = useSelector(store => store.otherCitiesReducer.otherCitiesWeatherList);
+    const [showedCityWeather, setShowedCityWeather] = useState(null);
 
     useEffect(() => {
         if (otherCitiesList.length === 1) setShowedCity(otherCitiesList[0]);
     }, [otherCitiesList]);
+
+    useEffect(() => {
+        if (!showedCity) return;
+
+        const showedCityWeatherSaved = otherCitiesWeatherList
+            .find(({ city }) => city.lat === showedCity.lat && city.lon === showedCity.lon);
+
+        if (showedCityWeatherSaved) {
+            setShowedCityWeather(showedCityWeatherSaved);
+            return;
+        }
+
+        getCityWeather(showedCity.lat, showedCity.lon)
+            .then(weather => {
+                dispatch(addToWeatherListAction(showedCity, weather));
+                setShowedCityWeather({ city: showedCity, weather });
+            })
+
+    }, [showedCity])
 
     const search = (e) => {
         e.preventDefault();
@@ -79,10 +101,18 @@ const OtherCitiesPage = () => {
                     />
                 </div>
             </div>
-            <div>
-                {/*<TodayWeather />*/}
-                {/*<SeveralDaysForecast />*/}
+            {showedCityWeather &&
+            <div className={classes['weather-widget']}>
+                <TodayWeather
+                    className={classes['current-weather']}
+                    weather={{
+                        current: showedCityWeather.weather.current,
+                        hourly: showedCityWeather.weather.hourly}}
+                    isOtherCity
+                />
+                <SeveralDaysForecast forecast={showedCityWeather.weather.daily} />
             </div>
+            }
         </div>
     );
 };

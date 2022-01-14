@@ -10,6 +10,8 @@ const CityPage = () => {
     const cx = useRef(classNames.bind(classes));
     const cityPageClasses = cx.current('edge-padding', 'page-container', 'city-page');
     const location = useSelector(store => store.locationReducer.location);
+    const todayWeather = useSelector(store => store.cityReducer.todayWeather);
+    const forecast = useSelector(store => store.cityReducer.forecast);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -20,8 +22,8 @@ const CityPage = () => {
 
     return (
         <div className={cityPageClasses}>
-            <TodayWeather />
-            <SeveralDaysForecast />
+            <TodayWeather weather={todayWeather} />
+            <SeveralDaysForecast forecast={forecast} />
         </div>
     );
 };

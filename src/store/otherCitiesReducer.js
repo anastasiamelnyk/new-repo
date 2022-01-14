@@ -4,13 +4,14 @@ import {getUniqueItemsArray} from "../utils/js";
 const defaultSate = {
     searchedCityResults: null,
     otherCitiesList: [],
-    otherCitiesWeatherList: null,
+    otherCitiesWeatherList: [],
 }
 
 const SET_SEARCHED_RESULTS = "SET_SEARCHED_RESULTS";
 const SET_OTHER_CITIES = "SET_OTHER_CITIES";
 const ADD_TO_OTHER_CITIES = "ADD_TO_OTHER_CITIES";
 const DELETE_FROM_OTHER_CITIES = "DELETE_FROM_OTHER_CITIES";
+const ADD_TO_WEATHER_LIST = "ADD_TO_WEATHER_LIST";
 
 export const otherCitiesReducer = (state = defaultSate, action) => {
     switch (action.type) {
@@ -23,6 +24,8 @@ export const otherCitiesReducer = (state = defaultSate, action) => {
                     [...state.otherCitiesList, action.payload],
                     ['lat', 'lon']
                 ) };
+        case ADD_TO_WEATHER_LIST:
+            return {  ...state, otherCitiesWeatherList: [...state.otherCitiesWeatherList, action.payload] }
         default:
             return state;
     }
@@ -34,6 +37,10 @@ const setSearchedResultsAction = (results) => {
 
 export const addToOtherCitiesActions = (city) => {
     return { type: ADD_TO_OTHER_CITIES, payload: city };
+}
+
+export const addToWeatherListAction = (city, weather) => {
+    return { type: ADD_TO_WEATHER_LIST, payload: { city, weather } };
 }
 
 export const searchCity = (cityName) => {
