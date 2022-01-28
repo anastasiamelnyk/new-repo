@@ -4,10 +4,12 @@ import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import { getFullDate, getHourMinuteDate, getIconPath, getWeatherDescription } from "../../utils/js";
 import PropTypes from 'prop-types';
+import cloneDeep from 'lodash.clonedeep';
 
 const TodayWeather = ({ weather, isOtherCity }) => {
     const renderHourly = () => {
-        const dayHourly = weather.hourly.splice(0, 24);
+        const dayHourlyFull = cloneDeep(weather.hourly);
+        const dayHourly = dayHourlyFull.splice(0, 24);
 
         return dayHourly.map(hour => (
             <div className={classes['hourly-item']} key={hour.dt}>
@@ -30,8 +32,7 @@ const TodayWeather = ({ weather, isOtherCity }) => {
             920: { items: 5 },
             1120: { items: 6 },
             1220: { items: 7 },
-            1400: { items: 8 },
-            1400: { items: 9 }
+            1400: { items: 8 }
         } : {
             0: { items: 3 },
             420: { items: 4 },

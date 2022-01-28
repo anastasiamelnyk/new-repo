@@ -9,6 +9,7 @@ import Button from "../../components/UI/Button/Button";
 import Tabs from "../../components/UI/Tabs/Tabs";
 import {useMediaQuery} from 'react-responsive';
 import { getCityWeather } from "../../store/cityReducer";
+import cloneDeep from "lodash.clonedeep";
 
 const OtherCitiesPage = () => {
     const cx = useRef(classNames.bind(classes));
@@ -26,7 +27,7 @@ const OtherCitiesPage = () => {
     const [showedCityWeather, setShowedCityWeather] = useState(null);
 
     useEffect(() => {
-        if (otherCitiesList.length === 1) setShowedCity(otherCitiesList[0]);
+        if (otherCitiesList.length === 1) setShowedCity(cloneDeep(otherCitiesList[0]));
     }, [otherCitiesList]);
 
     useEffect(() => {
@@ -36,17 +37,16 @@ const OtherCitiesPage = () => {
             .find(({ city }) => city.lat === showedCity.lat && city.lon === showedCity.lon);
 
         if (showedCityWeatherSaved) {
-            setShowedCityWeather(showedCityWeatherSaved);
+            setShowedCityWeather(cloneDeep(showedCityWeatherSaved));
             return;
         }
 
         getCityWeather(showedCity.lat, showedCity.lon)
             .then(weather => {
-                dispatch(addToWeatherListAction(showedCity, weather));
-                setShowedCityWeather({ city: showedCity, weather });
+                dispatch(addToWeatherListAction(cloneDeep(showedCity), weather));
             })
 
-    }, [showedCity])
+    }, [showedCity, otherCitiesWeatherList])
 
     const search = (e) => {
         e.preventDefault();
