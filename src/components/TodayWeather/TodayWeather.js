@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import cloneDeep from 'lodash.clonedeep';
 import {useMemo} from "react";
 
-const TodayWeather = ({ weather, isOtherCity }) => {
+const TodayWeather = ({ weather, isSavedCity }) => {
     const dayHourly = useMemo(() => {
         const dayHourlyFull = cloneDeep(weather?.hourly);
         return dayHourlyFull?.splice(0, 24);
@@ -24,7 +24,7 @@ const TodayWeather = ({ weather, isOtherCity }) => {
     }
 
     // carousel
-    const responsive = isOtherCity
+    const responsive = isSavedCity
         ? {
             0: { items: 2 },
             420: { items: 3 },
@@ -95,10 +95,10 @@ TodayWeather.propTypes = {
         current: PropTypes.object,
         hourly: PropTypes.array
     }),
-    isOtherCity: PropTypes.bool
+    isSavedCity: PropTypes.bool
 }
 
 TodayWeather.defaultProps = {
     weather: null,
-    isOtherCity: false
+    isSavedCity: false
 }

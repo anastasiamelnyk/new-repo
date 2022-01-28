@@ -5,7 +5,7 @@ import {useLocation} from "./hooks/useLocation";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import {setLocationErrorAction} from "./store/locationReducer";
 import {useDispatch, useSelector} from "react-redux";
-import OtherCitiesPage from "./containers/OtherCitiesPage/OtherCitiesPage";
+import SavedCitiesPage from "./containers/SavedCitiesPage/SavedCitiesPage";
 
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
                 <Header/>
                 <Switch>
                     <Route path="/other-cities">
-                        <OtherCitiesPage />
+                        <SavedCitiesPage />
                     </Route>
                     <Route path="/">
                         <CityWeather/>

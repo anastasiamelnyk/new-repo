@@ -2,12 +2,12 @@ import {applyMiddleware, combineReducers, createStore} from "redux";
 import thunk from "redux-thunk";
 import {cityReducer} from "./cityReducer";
 import {locationReducer} from "./locationReducer";
-import {otherCitiesReducer} from "./otherCitiesReducer";
+import {savedCitiesReducer} from "./savedCitiesReducer";
 
 const rootReducer = combineReducers({
     cityReducer,
     locationReducer,
-    otherCitiesReducer
+    savedCitiesReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

@@ -1,13 +1,13 @@
 import classNames from "classnames/bind";
 import {useEffect, useRef, useState} from "react";
-import classes from "./OtherCitiesPage.module.scss";
+import classes from "./SavedCitiesPage.module.scss";
 import TodayWeather from "../../components/TodayWeather/TodayWeather";
 import SeveralDaysForecast from "../../components/SeveralDaysForecast/SeveralDaysForecast";
 import {useDispatch, useSelector} from "react-redux";
 import {searchCity,
-    addToOtherCitiesAction,
-    deleteFromOtherCitiesAction,
-    addToWeatherListAction} from "../../store/otherCitiesReducer";
+    addToSavedCitiesAction,
+    deleteFromSavedCitiesAction,
+    addToWeatherListAction} from "../../store/savedCitiesReducer";
 import Tabs from "../../components/UI/Tabs/Tabs";
 import {useMediaQuery} from 'react-responsive';
 import { getCityWeather } from "../../store/cityReducer";
@@ -15,23 +15,23 @@ import cloneDeep from "lodash.clonedeep";
 import CitySearchBox from "../../components/CitySearchBox/CitySearchBox";
 import CitySearchResults from "../../components/CitySearchResults/CitySearchResults";
 
-const OtherCitiesPage = () => {
+const SavedCitiesPage = () => {
     const cx = useRef(classNames.bind(classes));
-    const otherCitiesPageClasses = cx.current('edge-padding', 'container');
+    const savedCitiesPageClasses = cx.current('edge-padding', 'container');
     const areTabsHorizontal = useMediaQuery({
         query: '(max-width: 767px)'
     })
     const dispatch = useDispatch();
-    const searchResults = useSelector(store => store.otherCitiesReducer.searchedCityResults);
-    const otherCitiesList = useSelector(store => store.otherCitiesReducer.otherCitiesList);
-    const otherCitiesWeatherList = useSelector(store => store.otherCitiesReducer.otherCitiesWeatherList);
+    const searchResults = useSelector(store => store.savedCitiesReducer.searchedCityResults);
+    const savedCitiesList = useSelector(store => store.savedCitiesReducer.savedCitiesList);
+    const savedCitiesWeatherList = useSelector(store => store.savedCitiesReducer.savedCitiesWeatherList);
     const [showedCity, setShowedCity] = useState(null);
     const [showedCityWeather, setShowedCityWeather] = useState(null);
 
     useEffect(() => {
-        if (otherCitiesList.length === 0) setShowedCity(null);
-        if (otherCitiesList.length === 1) setShowedCity(cloneDeep(otherCitiesList[0]));
-    }, [otherCitiesList]);
+        if (savedCitiesList.length === 0) setShowedCity(null);
+        if (savedCitiesList.length === 1) setShowedCity(cloneDeep(savedCitiesList[0]));
+    }, [savedCitiesList]);
 
     useEffect(() => {
         if (!showedCity) {
@@ -39,7 +39,7 @@ const OtherCitiesPage = () => {
             return;
         }
 
-        const showedCityWeatherSaved = otherCitiesWeatherList
+        const showedCityWeatherSaved = savedCitiesWeatherList
             .find(({ city }) => city.lat === showedCity.lat && city.lon === showedCity.lon);
 
         if (showedCityWeatherSaved) {
@@ -52,7 +52,7 @@ const OtherCitiesPage = () => {
                 dispatch(addToWeatherListAction(cloneDeep(showedCity), weather));
             })
 
-    }, [showedCity, otherCitiesWeatherList])
+    }, [showedCity, savedCitiesWeatherList])
 
     const search = (e, searchReq) => {
         e.preventDefault();
@@ -60,31 +60,31 @@ const OtherCitiesPage = () => {
     }
 
     return (
-        <div className={otherCitiesPageClasses}>
+        <div className={savedCitiesPageClasses}>
             <div className={classes['list']}>
                 <CitySearchBox search={search} />
                 <CitySearchResults
                     searchResults={searchResults}
-                    addToList={(city) => dispatch(addToOtherCitiesAction(city))}
+                    addToList={(city) => dispatch(addToSavedCitiesAction(city))}
                 />
                 <Tabs
-                    options={otherCitiesList}
+                    options={savedCitiesList}
                     keysToDisplay={['name', 'country', 'state']}
                     variant={areTabsHorizontal ? 'horizontal' : 'vertical'}
                     value={showedCity}
                     setValue={setShowedCity}
                     hasDeleteBtn
-                    deleteTab={(city) => dispatch(deleteFromOtherCitiesAction(city))}
+                    deleteTab={(city) => dispatch(deleteFromSavedCitiesAction(city))}
                 />
             </div>
-            {(showedCityWeather && otherCitiesList.length) &&
+            {(showedCityWeather && savedCitiesList.length) &&
             <div className={classes['weather-widget']}>
                 <TodayWeather
                     className={classes['current-weather']}
                     weather={{
                         current: showedCityWeather?.weather?.current,
                         hourly: showedCityWeather?.weather?.hourly}}
-                    isOtherCity
+                    isSavedCity
                 />
                 <SeveralDaysForecast forecast={showedCityWeather?.weather?.daily} />
             </div>
@@ -93,4 +93,4 @@ const OtherCitiesPage = () => {
     );
 };
 
-export default OtherCitiesPage;
+export default SavedCitiesPage;
