@@ -1,0 +1,31 @@
+.search-not-found {
+  padding-left: 40px;
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+  margin-top: -10px;
+}
+
+.search-list {
+  margin: 0 0 40px 0;
+  padding: 0 8px 0 0;
+  list-style-type: none;
+}
+
+.search-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+  &:first-child {
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+  }
+}
+
+.search-city {
+  font-size: 0.95rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

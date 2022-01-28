@@ -16,4 +16,10 @@ export class WeatherApi {
             }
         }).then(result => result.data);
     }
+
+    static getCityByName(cityName) {
+        return axios.get(`${BASE_URL}/geo/1.0/direct`, {
+            params: { q: cityName, limit: 5, appid: API_KEY}
+        })
+    }
 }

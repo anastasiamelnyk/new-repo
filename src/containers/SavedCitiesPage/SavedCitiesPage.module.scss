@@ -1,0 +1,44 @@
+@import "../../styles/_variables";
+
+.container {
+  display: grid;
+
+  @media (min-width: $media-sm) {
+    grid-template-columns: 2fr 3fr;
+  }
+
+  @media (min-width: $media-lg) {
+    grid-template-columns: 2fr 4fr;
+  }
+}
+
+.list {
+  @media (min-width: $media-sm) {
+    border-bottom: none;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    height: calc(100vh - 54px - 64px); //screen height - main menu height - location bar height
+  }
+}
+
+.weather-widget {
+  padding: 20px;
+  max-width: calc(100vw - 40px);
+
+  @media (min-width: $media-xs) {
+    max-width: calc(100vw - 80px);
+  }
+
+  @media (min-width: $media-sm) {
+    max-width: calc((100vw - 10vw) * (3/5));
+  }
+
+  @media (min-width: $media-lg) {
+    max-width: calc((100vw - 15vw) * (2/3));
+  }
+
+
+  section:first-child {
+    margin-bottom: 40px;
+    width: 100%;
+  }
+}

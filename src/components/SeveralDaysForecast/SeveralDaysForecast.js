@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types';
 import classes from './severalDaysForecast.module.scss';
 import LoadingIndicator from "../UI/LoadingIndicator/LoadingIndicator";
 import Modal from "../UI/Modal/Modal";
 import ForecastItem from "../ForecastItem/ForecastItem";
 import { getWeekdayDate, getMonthDayDate, getIconPath } from "../../utils/js";
 import {useState} from "react";
+import PropTypes from 'prop-types';
 
 const SeveralDaysForecast = ({ forecast }) => {
     const [modalShown, setModalShown] = useState(null);
@@ -42,4 +42,8 @@ export default SeveralDaysForecast;
 
 SeveralDaysForecast.propTypes = {
     forecast: PropTypes.arrayOf(PropTypes.object)
+}
+
+SeveralDaysForecast.defaultProps = {
+    forecast: null
 }

@@ -1,14 +1,19 @@
-import PropTypes from 'prop-types';
 import LoadingIndicator from "../UI/LoadingIndicator/LoadingIndicator";
 import classes from './todayWeather.module.scss';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import { getFullDate, getHourMinuteDate, getIconPath, getWeatherDescription } from "../../utils/js";
+import PropTypes from 'prop-types';
+import cloneDeep from 'lodash.clonedeep';
+import {useMemo} from "react";
 
-const TodayWeather = ({ weather }) => {
+const TodayWeather = ({ weather, isSavedCity }) => {
+    const dayHourly = useMemo(() => {
+        const dayHourlyFull = cloneDeep(weather?.hourly);
+        return dayHourlyFull?.splice(0, 24);
+    }, [weather]);
+
     const renderHourly = () => {
-        const dayHourly = weather.hourly.splice(0, 24);
-
         return dayHourly.map(hour => (
             <div className={classes['hourly-item']} key={hour.dt}>
                 <h4 className={classes['hour']}>{getHourMinuteDate(hour.dt)}</h4>
@@ -19,16 +24,28 @@ const TodayWeather = ({ weather }) => {
     }
 
     // carousel
-    const responsive = {
-        0: { items: 3 },
-        420: { items: 4 },
-        520: { items: 5 },
-        620: { items: 6 },
-        720: { items: 7 },
-        820: { items: 8 },
-        920: { items: 9 },
-        979: { items: 5 },
-        1400: { items: 6 },
+    const responsive = isSavedCity
+        ? {
+            0: { items: 2 },
+            420: { items: 3 },
+            520: { items: 5 },
+            620: { items: 6 },
+            720: { items: 7 },
+            768: { items: 4 },
+            920: { items: 5 },
+            1120: { items: 6 },
+            1220: { items: 7 },
+            1400: { items: 8 }
+        } : {
+            0: { items: 3 },
+            420: { items: 4 },
+            520: { items: 5 },
+            620: { items: 6 },
+            720: { items: 7 },
+            820: { items: 8 },
+            920: { items: 9 },
+            979: { items: 5 },
+            1400: { items: 6 }
     };
 
     const renderPrevButton = ({ isDisabled }) => (
@@ -74,8 +91,14 @@ const TodayWeather = ({ weather }) => {
 export default TodayWeather;
 
 TodayWeather.propTypes = {
-    weather: PropTypes.exact({
+    weather: PropTypes.shape({
         current: PropTypes.object,
-        hourly: PropTypes.arrayOf(PropTypes.object)
-    })
+        hourly: PropTypes.array
+    }),
+    isSavedCity: PropTypes.bool
+}
+
+TodayWeather.defaultProps = {
+    weather: null,
+    isSavedCity: false
 }
