@@ -1,5 +1,5 @@
 import {WeatherApi} from "../api/weatherApi";
-import {getUniqueItemsArray} from "../utils/js";
+import {getUniqueItemsArray, deleteCityFromArray} from "../utils/js";
 
 const defaultSate = {
     searchedCityResults: null,
@@ -24,6 +24,11 @@ export const otherCitiesReducer = (state = defaultSate, action) => {
                     [...state.otherCitiesList, action.payload],
                     ['lat', 'lon']
                 ) };
+        case DELETE_FROM_OTHER_CITIES:
+            return {
+                ...state,
+                otherCitiesList: deleteCityFromArray(state.otherCitiesList, action.payload)
+            }
         case ADD_TO_WEATHER_LIST:
             return {  ...state, otherCitiesWeatherList: [...state.otherCitiesWeatherList, action.payload] }
         default:
@@ -35,8 +40,12 @@ const setSearchedResultsAction = (results) => {
     return { type: SET_SEARCHED_RESULTS, payload: results };
 }
 
-export const addToOtherCitiesActions = (city) => {
+export const addToOtherCitiesAction = (city) => {
     return { type: ADD_TO_OTHER_CITIES, payload: city };
+}
+
+export const deleteFromOtherCitiesAction = (city) => {
+    return { type: DELETE_FROM_OTHER_CITIES, payload: city };
 }
 
 export const addToWeatherListAction = (city, weather) => {

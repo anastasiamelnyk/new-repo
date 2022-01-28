@@ -29,3 +29,9 @@ export const getUniqueItemsArray = (array, keyToCompare) => {
     }, []);
 }
 
+// expects initial array of city objects and city object to delete
+// returns array of city objects without one to be deleted
+export const deleteCityFromArray = (array, city) => {
+    return array.filter(item => item.lat !== city.lat && item.lon !== city.lon);
+}
+

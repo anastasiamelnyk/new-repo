@@ -4,7 +4,10 @@ import classes from "./OtherCitiesPage.module.scss";
 import TodayWeather from "../../components/TodayWeather/TodayWeather";
 import SeveralDaysForecast from "../../components/SeveralDaysForecast/SeveralDaysForecast";
 import {useDispatch, useSelector} from "react-redux";
-import {searchCity, addToOtherCitiesActions, addToWeatherListAction} from "../../store/otherCitiesReducer";
+import {searchCity,
+    addToOtherCitiesAction,
+    deleteFromOtherCitiesAction,
+    addToWeatherListAction} from "../../store/otherCitiesReducer";
 import Button from "../../components/UI/Button/Button";
 import Tabs from "../../components/UI/Tabs/Tabs";
 import {useMediaQuery} from 'react-responsive';
@@ -27,11 +30,15 @@ const OtherCitiesPage = () => {
     const [showedCityWeather, setShowedCityWeather] = useState(null);
 
     useEffect(() => {
+        if (otherCitiesList.length === 0) setShowedCity(null);
         if (otherCitiesList.length === 1) setShowedCity(cloneDeep(otherCitiesList[0]));
     }, [otherCitiesList]);
 
     useEffect(() => {
-        if (!showedCity) return;
+        if (!showedCity) {
+            setShowedCityWeather(null);
+            return;
+        }
 
         const showedCityWeatherSaved = otherCitiesWeatherList
             .find(({ city }) => city.lat === showedCity.lat && city.lon === showedCity.lon);
@@ -64,7 +71,7 @@ const OtherCitiesPage = () => {
             <ul className={classes['search-list']}>
                 {searchResults.map(result => (
                     <li className={classes['search-item']} key={result.lat}>
-                        <Button variant='add' clicked={() => dispatch(addToOtherCitiesActions(result))}/>
+                        <Button variant='add' clicked={() => dispatch(addToOtherCitiesAction(result))}/>
                         <div className={classes['search-city']}>
                             {result.name}, {result.country}, {result.state}
                         </div>
@@ -98,19 +105,21 @@ const OtherCitiesPage = () => {
                         variant={areTabsHorizontal ? 'horizontal' : 'vertical'}
                         value={showedCity}
                         setValue={setShowedCity}
+                        hasDeleteBtn
+                        deleteTab={(city) => dispatch(deleteFromOtherCitiesAction(city))}
                     />
                 </div>
             </div>
-            {showedCityWeather &&
+            {(showedCityWeather && otherCitiesList.length) &&
             <div className={classes['weather-widget']}>
                 <TodayWeather
                     className={classes['current-weather']}
                     weather={{
-                        current: showedCityWeather.weather.current,
-                        hourly: showedCityWeather.weather.hourly}}
+                        current: showedCityWeather?.weather?.current,
+                        hourly: showedCityWeather?.weather?.hourly}}
                     isOtherCity
                 />
-                <SeveralDaysForecast forecast={showedCityWeather.weather.daily} />
+                <SeveralDaysForecast forecast={showedCityWeather?.weather?.daily} />
             </div>
             }
         </div>
