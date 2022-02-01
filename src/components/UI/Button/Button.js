@@ -8,7 +8,7 @@ const Button = ({ children, variant, clicked, fullWidth }) => {
         <button
             onClick={clicked}
             className={classes['default-button']}
-            style={fullWidth ? {width: '100%'} : null}
+            style={fullWidth ? {width: '100%', minHeight: '38px'} : null}
         >
             {children}
         </button>
