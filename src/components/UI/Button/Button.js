@@ -1,11 +1,15 @@
 import PropTypes from 'prop-types';
 import classes from './Button.module.scss';
 
-const Button = ({ children, variant, clicked }) => {
+const Button = ({ children, variant, clicked, fullWidth }) => {
     if (variant === 'add') return <button onClick={clicked} className={classes['button-add']} />
 
     return (
-        <button className={classes['default-button']} onClick={clicked}>
+        <button
+            onClick={clicked}
+            className={classes['default-button']}
+            style={fullWidth ? {width: '100%'} : null}
+        >
             {children}
         </button>
     );
@@ -16,11 +20,13 @@ export default Button;
 Button.propTypes = {
     children: PropTypes.node,
     variant: PropTypes.oneOf(['default', 'add']),
-    clicked: PropTypes.func
+    clicked: PropTypes.func,
+    fullWidth: PropTypes.bool
 };
 
 Button.defaultProps = {
     children: '',
     variant: 'default',
-    clicked: null
+    clicked: null,
+    foolWidth: false
 };
