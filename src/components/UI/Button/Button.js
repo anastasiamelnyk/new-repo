@@ -15,12 +15,12 @@ export default Button;
 
 Button.propTypes = {
     children: PropTypes.node,
-    variant: PropTypes.oneOf(['add']),
+    variant: PropTypes.oneOf(['default', 'add']),
     clicked: PropTypes.func
 };
 
 Button.defaultProps = {
     children: '',
-    variant: '',
+    variant: 'default',
     clicked: null
 };
