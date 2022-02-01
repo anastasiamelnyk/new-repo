@@ -5,7 +5,7 @@ const Button = ({ children, variant, clicked }) => {
     if (variant === 'add') return <button onClick={clicked} className={classes['button-add']} />
 
     return (
-        <button onClick={clicked}>
+        <button className={classes['default-button']} onClick={clicked}>
             {children}
         </button>
     );
