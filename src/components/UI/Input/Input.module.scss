@@ -12,7 +12,7 @@
 }
 
 .input {
-  min-width: 280px;
+  width: 280px;
   min-height: 32px;
   padding: 8px 12px;
   border: 1px solid rgba(0, 0, 0, 0.5);
@@ -23,6 +23,7 @@
 }
 
 .error {
+  width: 280px;
   font-size: 0.8rem;
   line-height: 1rem;
   color: red;

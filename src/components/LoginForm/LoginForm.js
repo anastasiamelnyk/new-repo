@@ -7,8 +7,10 @@ import classes from "./LoginForm.module.scss";
 
 const LoginForm = () => {
     const schema = yup.object({
-        email: yup.string().email().required(),
-        password: yup.string().required(),
+        email: yup.string()
+            .email('Please enter valid email following the example: "user@email.com"')
+            .required('Email is required'),
+        password: yup.string().required('Password is required'),
     });
 
     const {
