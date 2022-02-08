@@ -3,6 +3,11 @@ import classes from './Button.module.scss';
 
 const Button = ({ children, variant, clicked, fullWidth }) => {
     if (variant === 'add') return <button onClick={clicked} className={classes['button-add']} />
+    if (variant === 'linkStyled') return (
+        <button onClick={clicked} className={classes['button-linkStyled']}>
+            {children}
+        </button>
+    );
 
     return (
         <button
@@ -19,7 +24,7 @@ export default Button;
 
 Button.propTypes = {
     children: PropTypes.node,
-    variant: PropTypes.oneOf(['default', 'add']),
+    variant: PropTypes.oneOf(['default', 'add', 'linkStyled']),
     clicked: PropTypes.func,
     fullWidth: PropTypes.bool
 };
