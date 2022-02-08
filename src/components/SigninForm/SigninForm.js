@@ -3,7 +3,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import Button from "../UI/Button/Button";
 import Input from "../UI/Input/Input";
-import classes from "./SigninForm.module.scss";
 import {useState} from "react";
 
 const SigninForm = () => {
@@ -35,7 +34,7 @@ const SigninForm = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit(signin)} className={classes['form']}>
+        <form onSubmit={handleSubmit(signin)}>
             <Input
                 labelText="Email"
                 register={register}

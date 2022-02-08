@@ -3,7 +3,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import Button from "../UI/Button/Button";
 import Input from "../UI/Input/Input";
-import classes from "./LoginForm.module.scss";
 
 const LoginForm = () => {
     const schema = yup.object({
@@ -24,7 +23,7 @@ const LoginForm = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit(login)} className={classes['form']}>
+        <form onSubmit={handleSubmit(login)}>
             <Input
                 labelText="Email"
                 register={register}

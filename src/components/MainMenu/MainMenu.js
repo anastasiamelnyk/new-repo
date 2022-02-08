@@ -1,6 +1,14 @@
 import MenuItem from "../UI/MenuItem/MenuItem";
+import classNames from 'classnames/bind';
+import {useRef, useState} from "react";
+import classes from './MainMenu.module.scss';
+import Button from "../UI/Button/Button";
+import Modal from "../UI/Modal/Modal";
+import AuthTabs from "../AuthTabs/AuthTabs";
 
 const MainMenu = () => {
+    const cx = useRef(classNames.bind(classes));
+    const menuContainerClasses = cx.current('edge-padding', 'container')
     const menuItems = [
         {
             name: 'city',
@@ -13,6 +21,7 @@ const MainMenu = () => {
             link: '/other-cities'
         }
     ];
+    const [isLoginModalShown, setLoginModalShown] = useState(false);
 
     const renderMenuItems = () => (
         menuItems.map(menuItem => (
@@ -22,10 +31,18 @@ const MainMenu = () => {
     );
 
     return (
-        <div className="edge-padding">
+        <div className={menuContainerClasses}>
             <nav>
                 {renderMenuItems()}
             </nav>
+            <div>
+                <Button clicked={() => setLoginModalShown(true)}>
+                    Login
+                </Button>
+            </div>
+            <Modal isShown={isLoginModalShown} closeModal={() => setLoginModalShown(false)}>
+                <AuthTabs />
+            </Modal>
         </div>
     );
 };
