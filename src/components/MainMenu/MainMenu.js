@@ -5,6 +5,8 @@ import classes from './MainMenu.module.scss';
 import Button from "../UI/Button/Button";
 import Modal from "../UI/Modal/Modal";
 import AuthTabs from "../AuthTabs/AuthTabs";
+import {useDispatch, useSelector} from "react-redux";
+import {logOutAction, setIsAuthModalOpenedAction} from "../../store/authReducer";
 
 const MainMenu = () => {
     const cx = useRef(classNames.bind(classes));
@@ -21,7 +23,10 @@ const MainMenu = () => {
             link: '/other-cities'
         }
     ];
-    const [isLoginModalShown, setLoginModalShown] = useState(false);
+    const dispatch = useDispatch();
+    const isAuth = useSelector(state => state.authReducer.isAuth);
+    const user = useSelector(state => state.authReducer.user);
+    const isAuthModalOpened = useSelector(state => state.authReducer.isAuthModalOpened);
 
     const renderMenuItems = () => (
         menuItems.map(menuItem => (
@@ -30,17 +35,34 @@ const MainMenu = () => {
             </MenuItem>))
     );
 
+    const renderAuthButtons = () => {
+        return isAuth
+            ? (
+                <>
+                    <span>{user.email}</span>
+                    <Button clicked={() => dispatch(logOutAction)}>
+                        Log out
+                    </Button>
+                </>
+            ) : (
+                <Button clicked={() => dispatch(setIsAuthModalOpenedAction(true))}>
+                    Login
+                </Button>
+            );
+    }
+
     return (
         <div className={menuContainerClasses}>
             <nav>
                 {renderMenuItems()}
             </nav>
-            <div>
-                <Button clicked={() => setLoginModalShown(true)}>
-                    Login
-                </Button>
+            <div className={classes['auth-buttons']}>
+                {renderAuthButtons()}
             </div>
-            <Modal isShown={isLoginModalShown} closeModal={() => setLoginModalShown(false)}>
+            <Modal
+                isShown={isAuthModalOpened}
+                closeModal={() => dispatch(setIsAuthModalOpenedAction(false))}
+            >
                 <AuthTabs />
             </Modal>
         </div>

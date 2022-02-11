@@ -4,8 +4,12 @@ import * as yup from "yup";
 import Button from "../UI/Button/Button";
 import Input from "../UI/Input/Input";
 import {useState} from "react";
+import { useDispatch } from "react-redux";
+import {signInAction} from "../../store/authReducer";
 
 const SigninForm = () => {
+    const dispatch = useDispatch();
+
     const schema = yup.object({
         email: yup.string()
             .email('Please enter valid email following the example: "email@test.com"')
@@ -23,14 +27,16 @@ const SigninForm = () => {
     const [passwordError, setPasswordError] = useState('');
 
     const signin = data => {
-        const { password, repeatPassword } = data;
+        const { email, password, repeatPassword } = data;
+
         if (password !== repeatPassword) {
             setPasswordError('Passwords do not match');
             return;
         }
 
         setPasswordError('');
-        console.log(data);
+
+        dispatch(signInAction({email, password}));
     }
 
     return (
